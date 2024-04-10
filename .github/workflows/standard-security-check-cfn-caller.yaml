@@ -14,7 +14,7 @@ on:
 
 jobs:
     security-scanner-developers:
-        uses: cloudformation-aws-iam-policy-validator/.github/workflows/standard-security-check-cfn.yaml@action
+        uses: aws-actions/cloudformation-aws-iam-policy-validator/.github/workflows/standard-security-check-cfn.yaml@action
         secrets: inherit
         with:
             template-path: test/check-access-not-granted/iam_users_groups_policies.yaml
