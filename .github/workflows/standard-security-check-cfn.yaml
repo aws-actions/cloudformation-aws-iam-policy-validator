@@ -1,0 +1,68 @@
+name: Standard Security Scanner for Policy Checks for CFN templates
+on:
+  workflow_call: 
+    inputs:
+      template-path:
+        required: true
+        type: string
+      region:
+        required: true
+        type: string
+    outputs:
+      result:
+        value: string
+jobs:
+  security-scanner-shared:
+    runs-on: ubuntu-latest # Vitual machine to run the workflow (configurable)
+    #https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#updating-your-github-actions-workflow
+    #https://aws.amazon.com/blogs/security/use-iam-roles-to-connect-github-actions-to-actions-in-aws/
+    permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
+    # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners
+    name: Security test - check access not granted
+    steps:
+      # checkout the repo for workflow to access the contents
+      - name: Checkout 
+        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::918558646224:role/AccessAnalyzerRoleGithub
+          aws-region: ${{ inputs.region }}
+      - name: Run ValidatePolicy 
+        id: run-validate-policy
+        uses: ./
+        with:
+          policy-check-type: 'VALIDATE_POLICY'
+          template-path: ${{ inputs.template-path }}
+          region: ${{ inputs.region }}
+      - name: Print the result for ValidatePolicy
+        run: echo "${{ steps.run-validate-policy.outputs.result }}"
+      - name: Fetch critical actions from s3
+        id: getCriticalActions
+        run: |
+          echo "actionsLst=$(aws s3 cp s3://aws-critical-actions/critical-actions-list.txt -)"  >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Use check access not granted action
+        id: run-check-access-not-granted
+        uses: ./
+        with:
+          policy-check-type: 'CHECK_ACCESS_NOT_GRANTED'
+          template-path: ${{ inputs.template-path }}
+          actions: ${{ steps.getCriticalActions.outputs.actionsLst }}
+          region: ${{ inputs.region }}
+          treat-findings-as-non-blocking: "True"
+      - name: Print the result for CheckAccessNotGranted
+        run: echo "${{ steps.run-check-access-not-granted.outputs.result }}"
+      - name: Use check no new access action
+        id: run-check-no-new-access
+        uses: ./
+        with:
+          policy-check-type: 'CHECK_NO_NEW_ACCESS'
+          template-path: "test/check-no-new-access/cfn/iam_users_groups_policies.yaml"
+          reference-policy: "test/check-no-new-access/cfn/reference-policy.json"
+          reference-policy-type: "IDENTITY"
+          region: "us-west-2"
+      - name: Print the result 
+        run: echo "${{ steps.run-check-no-new-access.outputs.result }}"

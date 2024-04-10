@@ -1,0 +1,21 @@
+name: Standard Security Scanner for Policy Checks for CFN templates. (caller)
+on:
+  pull_request:
+    types: [opened, review_requested]
+  push:
+    branches:
+      - 'action'
+  workflow_dispatch:
+    inputs:
+      template-path: 
+        default: templates-cfn/iam_users_groups_policies.yaml
+      region:
+        default: us-west-2  
+
+jobs:
+    security-scanner-developers:
+        uses: cloudformation-aws-iam-policy-validator/.github/workflows/standard-security-check-cfn.yaml@action
+        secrets: inherit
+        with:
+            template-path: test/check-access-not-granted/iam_users_groups_policies.yaml
+            region: us-west-2
