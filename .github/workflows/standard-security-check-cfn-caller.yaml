@@ -4,7 +4,7 @@ on:
     types: [opened, review_requested]
   push:
     branches:
-      - 'action'
+      - 'temp'
   workflow_dispatch:
     inputs:
       template-path: 
@@ -14,7 +14,7 @@ on:
 
 jobs:
     security-scanner-developers:
-        uses: aws-actions/cloudformation-aws-iam-policy-validator/.github/workflows/standard-security-check-cfn.yaml@action
+        uses: aws-actions/cloudformation-aws-iam-policy-validator/.github/workflows/standard-security-check-cfn.yaml@temp
         secrets: inherit
         with:
             template-path: test/check-access-not-granted/iam_users_groups_policies.yaml
