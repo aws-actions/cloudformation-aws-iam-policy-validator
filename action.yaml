@@ -1,5 +1,5 @@
-name: 'Policy checks to validate AWS IAM policies in CloudFormation templates" Action For GitHub Actions'
-description: "Uses ValidatePolicy, CheckAccessNotGranted, CheckNoNewAccess APIs from AWS Access Analyzer for policy checks - https://docs.aws.amazon.com/access-analyzer/latest/APIReference/"
+name: 'Policy checks to validate AWS IAM policies in Terraform templates" Action For GitHub Actions'
+description: "Validate IAM Policies in TF templates using ValidatePolicy, CheckAccessNotGranted & CheckNoNewAccess API in Access Analyzer"
 branding:
   icon: "cloud"
   color: "orange"
@@ -8,15 +8,11 @@ inputs:
     description: "Type of the policy check. Valid values: VALIDATE_POLICY, CHECK_NO_NEW_ACCESS, CHECK_ACCESS_NOT_GRANTED"
     required: true
   template-path:
-    description: "The path to the CloudFormation template."
+    description: "The path to the Terraform plan file (JSON)."
     required: true
   region:
     description: "The destination region the resources will be deployed to."
     required: true
-  parameters:
-    description: "Keys and values for CloudFormation template parameters. Only parameters that are referenced by IAM policies in the template are required. Example format - KEY=VALUE [KEY=VALUE ...]"
-  template-configuration-file:
-    description: "A JSON formatted file that specifies template parameter values, a stack policy, and tags. Only parameters are used from this file. Everything else is ignored. Identical values passed in the --parameters flag override parameters in this file. See CloudFormation documentation for file format: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/continuous-delivery-codepipeline-cfn-artifacts.html"
   ignore-finding:
     description: 'Allow validation failures to be ignored. Specify as a comma separated list of findings to be ignored. Can be individual finding codes (e.g. "PASS_ROLE_WITH_STAR_IN_RESOURCE"), a specific resource name (e.g. "MyResource"), or a combination of both separated by a period.(e.g. "MyResource.PASS_ROLE_WITH_STAR_IN_RESOURCE"). Names of finding codes may change in IAM Access Analyzer over time. Valid options: FINDING_CODE,RESOURCE_NAME,RESOURCE_NAME.FINDING_CODE'
   actions:
@@ -46,8 +42,6 @@ runs:
     - ${{ inputs.policy-check-type}}
     - ${{ inputs.template-path }}
     - ${{ inputs.region }}
-    - ${{ inputs.parameters }}
-    - ${{ inputs.template-configuration-file }}
     - ${{ inputs.ignore-finding }}
     - ${{ inputs.actions }}
     - ${{ inputs.reference-policy }}
