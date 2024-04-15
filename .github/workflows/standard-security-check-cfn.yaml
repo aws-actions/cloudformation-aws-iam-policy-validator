@@ -35,13 +35,13 @@ on:
     outputs:
       result:
         value: string
-  push:
-    branches: [$default-branch, $protected-branches]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [$default-branch]
-  schedule:
-    - cron: $cron-weekly
+  # push:
+  #   branches: [$default-branch, $protected-branches]
+  # pull_request:
+  #   # The branches below must be a subset of the branches above
+  #   branches: [$default-branch]
+  # schedule:
+  #   - cron: $cron-weekly
 jobs:
   security-scanner-shared:
     runs-on: ubuntu-latest # Virtual machine to run the workflow (configurable)
