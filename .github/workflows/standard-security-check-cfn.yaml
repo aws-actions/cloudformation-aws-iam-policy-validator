@@ -64,7 +64,7 @@ jobs:
       # Run the VALIDATE_POLICY check. More configuration details here - https://github.com/aws-actions/cloudformation-aws-iam-policy-validator
       - name: Run AWS AccessAnalyzer ValidatePolicy check
         id: run-aws-validate-policy
-        uses: aws-actions/cloudformation-aws-iam-policy-validator@v1
+        uses: aws-actions/cloudformation-aws-iam-policy-validator@v1.0.0
         with:
           policy-check-type: "VALIDATE_POLICY"
           template-path: ${{ inputs.template-path }}
@@ -81,7 +81,7 @@ jobs:
       # Run the CHECK_ACCESS_NOT_GRANTED check. More configuration details here - https://github.com/aws-actions/cloudformation-aws-iam-policy-validator
       - name: Run AWS AccessAnalyzer CheckAccessNotGranted check
         id: run-aws-check-access-not-granted
-        uses: aws-actions/cloudformation-aws-iam-policy-validator@v1
+        uses: aws-actions/cloudformation-aws-iam-policy-validator@v1.0.0
         with:
           policy-check-type: "CHECK_ACCESS_NOT_GRANTED"
           template-path: ${{ inputs.template-path }}
@@ -94,7 +94,7 @@ jobs:
       # reference-policy is stored in GitHub secrets
       - name: Run AWS AccessAnalyzer CheckNoNewAccess check
         id: run-aws-check-no-new-access
-        uses: aws-actions/cloudformation-aws-iam-policy-validator@v1
+        uses: aws-actions/cloudformation-aws-iam-policy-validator@v1.0.0
         with:
           policy-check-type: "CHECK_NO_NEW_ACCESS"
           template-path: ${{ inputs.template-path }}
