@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: IAM452 Sample CloudFormation2
+
+Resources:
+  MyIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: MyEC2Role
+      Description: IAM Role for EC2 instances
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Sid: some new stuff
+            Principal:
+              AWS: arn:aws:iam::333333333333:role/NotMyRole
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2FullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
