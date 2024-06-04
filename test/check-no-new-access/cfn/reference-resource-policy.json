@@ -1,0 +1,22 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "AllowPrincipalsInTheseAccounts",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": [
+            "111111111111",
+            "222222222222"
+          ]
+        },
+        "Action": "sts:AssumeRole"
+      },
+      {
+        "Sid": "AllowOtherSTSActions",
+        "Effect": "Allow",
+        "Principal": "*",
+        "NotAction": "sts:AssumeRole"
+      }
+    ]
+  }
