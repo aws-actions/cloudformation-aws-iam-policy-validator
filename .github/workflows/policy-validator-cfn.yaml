@@ -80,7 +80,7 @@ jobs:
       #     region: ${{env.REGION }}
       - name: Run AWS AccessAnalyzer CheckNoNewAccess check
         id: run-aws-check-no-new-access
-        uses: aws-actions/cloudformation-aws-iam-policy-validator@1.0.1 #v1.0.0
+        uses: aws-actions/cloudformation-aws-iam-policy-validator@v1.0.1 #v1.0.0
         with:
           policy-check-type: "CHECK_NO_NEW_ACCESS"
           template-path: 'test/check-no-new-access/cfn/sample-role.yaml'
