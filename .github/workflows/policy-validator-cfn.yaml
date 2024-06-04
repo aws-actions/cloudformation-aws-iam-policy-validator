@@ -84,7 +84,7 @@ jobs:
         with:
           policy-check-type: "CHECK_NO_NEW_ACCESS"
           template-path: 'test/check-no-new-access/cfn/sample-role.yaml'
-          reference-policy: 'test/check-no-new-access/cfn/reference-resource-policy.json '
+          reference-policy: 'test/check-no-new-access/cfn/reference-resource-policy.json'
           reference-policy-type: 'RESOURCE'
           region: ${{env.REGION }}
       # Print result from CHECK_NO_NEW_ACCESS check
