@@ -83,8 +83,8 @@ jobs:
         uses: aws-actions/cloudformation-aws-iam-policy-validator@10479bdc0c8322ffb6f5eaa75d096195f97b798a #v1.0.0
         with:
           policy-check-type: "CHECK_NO_NEW_ACCESS"
-          template-path: './sample-role.yaml'
-          reference-policy: './reference-resource-policy.json'
+          template-path: 'test/check-no-new-access/cfn/sample-role.yaml'
+          reference-policy: 'test/check-no-new-access/cfn/reference-resource-policy.json '
           reference-policy-type: 'RESOURCE'
           region: ${{env.REGION }}
       # Print result from CHECK_NO_NEW_ACCESS check
