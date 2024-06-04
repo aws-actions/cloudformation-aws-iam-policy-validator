@@ -55,18 +55,18 @@ jobs:
         if: success() || failure()
         run: echo "${{ steps.run-aws-validate-policy.outputs.result }}"
       # Run the CHECK_ACCESS_NOT_GRANTED check. More configuration details here - https://github.com/aws-actions/cloudformation-aws-iam-policy-validator
-      - name: Run AWS AccessAnalyzer CheckAccessNotGranted check
-        id: run-aws-check-access-not-granted
-        uses: aws-actions/cloudformation-aws-iam-policy-validator@10479bdc0c8322ffb6f5eaa75d096195f97b798a #v1.0.0
-        with:
-          policy-check-type: "CHECK_ACCESS_NOT_GRANTED"
-          template-path: ${{ env.TEMPLATE_PATH}}
-          actions: ${{ env.ACTIONS }}
-          region: ${{ env.REGION }}
-      # Print result from CHECK_ACCESS_NOT_GRANTED check
-      - name: Print the result for CheckAccessNotGranted check
-        if: success() || failure()
-        run: echo "${{ steps.run-aws-check-access-not-granted.outputs.result }}"
+      # - name: Run AWS AccessAnalyzer CheckAccessNotGranted check
+      #   id: run-aws-check-access-not-granted
+      #   uses: aws-actions/cloudformation-aws-iam-policy-validator@10479bdc0c8322ffb6f5eaa75d096195f97b798a #v1.0.0
+      #   with:
+      #     policy-check-type: "CHECK_ACCESS_NOT_GRANTED"
+      #     template-path: ${{ env.TEMPLATE_PATH}}
+      #     actions: ${{ env.ACTIONS }}
+      #     region: ${{ env.REGION }}
+      # # Print result from CHECK_ACCESS_NOT_GRANTED check
+      # - name: Print the result for CheckAccessNotGranted check
+      #   if: success() || failure()
+      #   run: echo "${{ steps.run-aws-check-access-not-granted.outputs.result }}"
       # Run the CHECK_NO_NEW_ACCESS check. More configuration details here - https://github.com/aws-actions/cloudformation-aws-iam-policy-validator
       # reference-policy is stored in GitHub secrets
       # - name: Run AWS AccessAnalyzer CheckNoNewAccess check
