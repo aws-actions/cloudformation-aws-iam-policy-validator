@@ -81,7 +81,7 @@ Resources:
             Resource: "arn:aws:sqs:us-east-2:444455556666:queue2"
             Principal:  
               AWS: 
-                - "*" #111122223333
+                - "111122223333" #111122223333
 Outputs:
   AccessKey:
     Value: !Ref 'CFNKeys'
